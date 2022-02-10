@@ -1,150 +1,107 @@
-import tkinter as tk
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
-result = [' без перехода на ИБП', ' пропала связь с:\n','\nТакже от батарей работает:\n', '\nДТЕК: ', '\nПредседатель: ', '\nАбонент: ', '\nУК \"Суворовский\": ', '\nПередано: ', '\nНовость добавлена.']
-modern = ['Замена оборудования: \nРаботает: \nСроки: 30 минут\n']
+import sys
+from PyQt5 import QtCore, QtGui,  QtWidgets, uic
 
-def upd():
-    txt_sobitie.delete(1.0, tk.END)
-    if dd.get():
-        c_ups.config(state=tk.DISABLED)
-        c_work.deselect()
-        c_work.config(state=tk.DISABLED)
-        c_noups.config(state=tk.DISABLED)
-        txt_sobitie.insert(1.0, result[1])
-    elif ups.get():
-        c_dd.config(state=tk.DISABLED)
-        c_work.deselect()
-        c_work.config(state=tk.DISABLED)
-        c_noups.config(state=tk.DISABLED)
-        txt_sobitie.insert(1.0, result[1])
-        txt_sobitie.insert(2.0, result[2])
-    elif noups.get():
-        c_ups.config(state=tk.DISABLED)
-        c_work.deselect()
-        c_work.config(state=tk.DISABLED)
-        c_dd.config(state=tk.DISABLED)
-        txt_sobitie.insert(1.0, result[0])
-        txt_sobitie.insert(2.0, result[1])
-    else:
-        c_ups.config(state=tk.NORMAL)
-        c_work.config(state=tk.NORMAL)
-        c_dd.config(state=tk.NORMAL)
-        c_noups.config(state=tk.NORMAL)
-    if dtek.get():
-        c_work.deselect()
-        x = str(len(txt_sobitie.get(1.0, tk.END)))+'.'+str(0)
-        txt_sobitie.insert(x, result[3])
-    if predsed.get():
-        c_work.deselect()
-        y = str(len(txt_sobitie.get(1.0, tk.END)))+'.'+str(0)
-        txt_sobitie.insert(y, result[4])
-    if abon.get():
-        c_work.deselect()
-        z = str(len(txt_sobitie.get(1.0, tk.END)))+'.'+str(0)
-        txt_sobitie.insert(z, result[5])
-    if suv.get():
-        c_work.deselect()
-        z = str(len(txt_sobitie.get(1.0, tk.END)))+'.'+str(0)
-        txt_sobitie.insert(z, result[6])
-    if per.get():
-        c_work.deselect()
-        z = str(len(txt_sobitie.get(1.0, tk.END)))+'.'+str(0)
-        txt_sobitie.insert(z, result[7])
-    if news.get():
-        c_work.deselect()
-        z = str(len(txt_sobitie.get(1.0, tk.END)))+'.'+str(0)
-        txt_sobitie.insert(z, result[8])
+class Window(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(Window, self).__init__()
+        uic.loadUi('interface.ui', self)
+        self.tmp = ''
+        self.cb = [self.checkBox,
+                   self.checkBox_2,
+                   self.checkBox_3,
+                   self.checkBox_4,
+                   self.checkBox_5,
+                   self.checkBox_6,
+                   self.checkBox_7]
+        self.rb = [self.radioButton,
+                   self.radioButton_2,
+                   self.radioButton_3,
+                   self.radioButton_4,
+                   self.radioButton_5,
+                   self.radioButton_6]
+        self.names = {'down': ' пропала связь с:\n',
+                      'ups': ' работает от батарей:\n',
+                      'dups': ' пропала связь с:\n\nТакже от батарей работает:\n',
+                      'fups': ' без перехода на ИБП пропала связь с:\n',
+                      'zam': 'Замена оборудования: \nРаботает: \nСроки: 30 минут\n',
+                      'sig': 'Модернизация сети: \nРаботает: \nСроки: 30 минут\n',
+                      'dtek': '\nДТЕК: отключений нет',
+                      'pred': '\nПредседатель: ',
+                      'suv': '\nУК \"Суворовский\": ',
+                      'abon': '\nАбонент: ',
+                      'per': '\nПередано: ',
+                      'news': '\nНовость добавлена.',
+                      'sms': '\nОтправлены sms.'}
+        self.radioButton.toggled.connect(self.work)
+        self.radioButton_2.toggled.connect(self.work)
+        self.radioButton_3.toggled.connect(self.work)
+        self.radioButton_4.toggled.connect(self.work)
+        self.radioButton_5.toggled.connect(self.work)
+        self.radioButton_6.toggled.connect(self.work)
+        self.radioButton_7.setHidden(True)
+        self.checkBox.toggled.connect(self.check)
+        self.checkBox_2.toggled.connect(self.check)
+        self.checkBox_3.toggled.connect(self.check)
+        self.checkBox_4.toggled.connect(self.check)
+        self.checkBox_5.toggled.connect(self.check)
+        self.checkBox_6.toggled.connect(self.check)
+        self.checkBox_7.toggled.connect(self.check)
+        self.pushButton_2.toggled.connect(self.mode)
+        self.pushButton_3.clicked.connect(self.copy)
+        self.show()
+        
+    def mode(self):
+        if self.pushButton_2.isChecked():
+            Window.setStyleSheet(self, 'background-color: rgb(175, 175, 175);')
+        elif not self.pushButton_2.isChecked():
+            Window.setStyleSheet(self, 'background-color: rgb(f0, f0, f0);')
 
-def cleaner():
-    c_ups.deselect()
-    c_ups.config(state=tk.NORMAL)
-    c_dtek.deselect()
-    c_dtek.config(state=tk.NORMAL)
-    c_predsed.deselect()
-    c_predsed.config(state=tk.NORMAL)
-    c_abon.deselect()
-    c_abon.config(state=tk.NORMAL)
-    c_noups.deselect()
-    c_noups.config(state=tk.NORMAL)
-    c_dd.deselect()
-    c_dd.config(state=tk.NORMAL)
-    c_suv.deselect()
-    c_suv.config(state=tk.NORMAL)
-    c_per.deselect()
-    c_per.config(state=tk.NORMAL)
-    c_news.deselect()
-    c_news.config(state=tk.NORMAL)
-    c_work.deselect()
-    c_work.config(state=tk.NORMAL)
-    txt_sobitie.delete(1.0, tk.END)
-
-def wrk():
-    if work.get():
-        c_ups.deselect()
-        c_ups.config(state=tk.NORMAL)
-        c_dtek.deselect()
-        c_dtek.config(state=tk.NORMAL)
-        c_predsed.deselect()
-        c_predsed.config(state=tk.NORMAL)
-        c_abon.deselect()
-        c_abon.config(state=tk.NORMAL)
-        c_noups.deselect()
-        c_noups.config(state=tk.NORMAL)
-        c_dd.deselect()
-        c_dd.config(state=tk.NORMAL)
-        c_suv.deselect()
-        c_suv.config(state=tk.NORMAL)
-        c_per.deselect()
-        c_per.config(state=tk.NORMAL)
-        c_news.deselect()
-        c_news.config(state=tk.NORMAL)
-        txt_sobitie.delete(1.0, tk.END)
-        txt_sobitie.insert(1.0, modern[0])
-    else:
-        c_work.deselect()
-        txt_sobitie.delete(1.0, tk.END)
-
-root = tk.Tk()
-root.title('Событятор')
-# root.iconbitmap('Keyboard-Delete.ico')
-ups = tk.BooleanVar()
-dtek = tk.BooleanVar()
-predsed = tk.BooleanVar()
-abon = tk.BooleanVar()
-noups = tk.BooleanVar()
-dd = tk.BooleanVar()
-suv = tk.BooleanVar()
-per = tk.BooleanVar()
-news = tk.BooleanVar()
-work = tk.BooleanVar()
-frm = tk.Frame(root, bd=1, relief='ridge')
-c_dd = tk.Checkbutton(frm, text='Down', variable=dd, onvalue=True, offvalue=False, command=upd)
-c_dd.pack(side='left', padx=1)
-c_noups = tk.Checkbutton(frm, text='Без UPS', variable=noups, onvalue=True, offvalue=False, command=upd)
-c_noups.pack(side='left', padx=1)
-c_ups = tk.Checkbutton(frm, text='UPS', variable=ups, onvalue=True, offvalue=False, command=upd)
-c_ups.pack(side='left', padx=1)
-c_work = tk.Checkbutton(frm, text='Замена', variable=work, onvalue=True, offvalue=False, command=wrk)
-c_work.pack(side='left', padx=1)
-c_dtek = tk.Checkbutton(frm, text='ДТЕК', variable=dtek, onvalue=True, offvalue=False, command=upd)
-c_dtek.pack(side='left', padx=1)
-c_predsed = tk.Checkbutton(frm, text='Председатель', variable=predsed, onvalue=True, offvalue=False, command=upd)
-c_predsed.pack(side='left', padx=1)
-c_abon = tk.Checkbutton(frm, text='Абонент', variable=abon, onvalue=True, offvalue=False, command=upd)
-c_abon.pack(side='left', padx=1)
-c_suv = tk.Checkbutton(frm, text='Суворовский', variable=suv, onvalue=True, offvalue=False, command=upd)
-c_suv.pack(side='left', padx=1)
-c_per = tk.Checkbutton(frm, text='Передано', variable=per, onvalue=True, offvalue=False, command=upd)
-c_per.pack(side='left', padx=1)
-c_news = tk.Checkbutton(frm, text='Новость', variable=news, onvalue=True, offvalue=False, command=upd)
-c_news.pack(side='left', padx=1)
-frm.pack(fill='x')
-sobitie = tk.Frame(root, bd=1, relief='ridge')
-txt_sobitie = tk.Text(sobitie, wrap='word')
-txt_sobitie.pack(side='left')
-sobitie.pack()
-rst = tk.Frame(root, bd=1, relief='ridge')
-b_rst = tk.Button(rst, text='Очистить', command=cleaner)
-b_rst.pack(side='bottom', padx=1)
-rst.pack()
-root.mainloop()
+    def work(self):
+        for i in range (len(self.rb)):
+            if self.rb[i].isChecked():
+                if self.rb[i].accessibleName() == 'zam' or self.rb[i].accessibleName() == 'sig':
+                    for x in range (len(self.cb) - 2):
+                        self.cb[x].setChecked(False)
+                        self.cb[x].setEnabled(False)
+                elif self.rb[i].accessibleName() != 'zam'or self.rb[i].accessibleName() != 'sig':
+                    for x in range (len(self.cb) - 2):
+                        self.cb[x].setChecked(False)
+                        self.cb[x].setEnabled(True)
+                self.plainTextEdit.setPlainText(self.names.get(self.rb[i].accessibleName()))
+    
+    def check(self):       
+        for j in range (len(self.cb)):
+            self.tmp = self.plainTextEdit.toPlainText()
+            if self.cb[j].isChecked():
+                if self.names.get(self.cb[j].accessibleName()) not in self.plainTextEdit.toPlainText():
+                    self.tmp = self.plainTextEdit.toPlainText()
+                    self.tmp += self.names.get(self.cb[j].accessibleName())
+                    self.plainTextEdit.setPlainText(self.tmp)
+            elif not self.cb[j].isChecked():
+                if self.names.get(self.cb[j].accessibleName()) in self.plainTextEdit.toPlainText():
+                    if self.cb[j].accessibleName() == 'dtek' or self.cb[j].accessibleName() == 'news' or self.cb[j].accessibleName() == 'sms':
+                        self.tmp = self.tmp.replace(self.names.get(self.cb[j].accessibleName()), '')
+                        self.plainTextEdit.setPlainText(self.tmp)
+                        break
+                    self.tmp = self.tmp.replace(self.names.get(self.cb[j].accessibleName()), '#')
+                    self.a = self.tmp.find('#')
+                    self.b = self.tmp.find('\n', self.a)
+                    self.tmp = self.tmp.replace(self.tmp[self.a:self.b], '')
+                    self.tmp = self.tmp.replace('#', '')
+                    if self.b == -1 and len(self.tmp) > 0:
+                        self.tmp = self.tmp.replace(self.tmp[self.b], '')
+                    self.plainTextEdit.setPlainText(self.tmp)
+                    print(self.tmp)                    
+       
+    def copy(self):
+        self.plainTextEdit.selectAll()
+        self.plainTextEdit.copy()
+ 
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    instance = Window()
+    instance.show()
+    sys.exit(app.exec_())

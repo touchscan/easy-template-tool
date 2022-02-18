@@ -507,6 +507,12 @@
        <normaloff>Lamp-Active-32.png</normaloff>
        <normalon>Lamp-Inactive-32.png</normalon>Lamp-Active-32.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
@@ -757,6 +763,86 @@
     <hint type="destinationlabel">
      <x>574</x>
      <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>checkBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>489</x>
+     <y>350</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>366</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>checkBox_2</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>510</x>
+     <y>348</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>400</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>checkBox_3</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>471</x>
+     <y>356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>checkBox_4</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>548</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>checkBox_5</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>564</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>487</x>
+     <y>41</y>
     </hint>
    </hints>
   </connection>

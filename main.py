@@ -26,9 +26,9 @@ class Window(QtWidgets.QMainWindow):
                       'ups': ' работает от батарей:\n',
                       'dups': ' пропала связь с:\n\nТакже от батарей работает:\n',
                       'fups': ' без перехода на ИБП пропала связь с:\n',
-                      'zam': 'Замена оборудования: \nРаботает: \nСроки: 30 минут\n',
-                      'sig': 'Модернизация сети: \nРаботает: \nСроки: 30 минут\n',
-                      'dtek': '\nДТЕК: отключений нет',
+                      'zam': 'Замена оборудования: \nРаботает: \nСроки: 30 минут.\n',
+                      'sig': 'Модернизация сети: \nРаботает: \nСроки: 30 минут.\n',
+                      'dtek': '\nДТЕК: отключений нет.',
                       'pred': '\nПредседатель: ',
                       'suv': '\nУК \"Суворовский\": ',
                       'abon': '\nАбонент: ',
@@ -94,7 +94,6 @@ class Window(QtWidgets.QMainWindow):
                     if self.b == -1 and len(self.tmp) > 0:
                         self.tmp = self.tmp.replace(self.tmp[self.b], '')
                     self.plainTextEdit.setPlainText(self.tmp)
-                    print(self.tmp)                    
        
     def copy(self):
         self.plainTextEdit.selectAll()
